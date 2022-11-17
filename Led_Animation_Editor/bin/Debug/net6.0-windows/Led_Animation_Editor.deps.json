@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "Led_Animation_Editor/1.0.0": {
+        "runtime": {
+          "Led_Animation_Editor.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Led_Animation_Editor/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
