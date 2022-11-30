@@ -40,14 +40,14 @@
             this.phases_nud = new System.Windows.Forms.NumericUpDown();
             this.delay_nud = new System.Windows.Forms.NumericUpDown();
             this.animation_maker_p = new System.Windows.Forms.Panel();
-            this.colors_lb = new System.Windows.Forms.ListBox();
+            this.colors_lv = new System.Windows.Forms.ListView();
+            this.phases_lv = new System.Windows.Forms.ListView();
             this.color_b = new System.Windows.Forms.Button();
             this.to_l = new System.Windows.Forms.Label();
             this.from_l = new System.Windows.Forms.Label();
             this.numericUpDown5 = new System.Windows.Forms.NumericUpDown();
             this.numericUpDown4 = new System.Windows.Forms.NumericUpDown();
             this.save_b = new System.Windows.Forms.Button();
-            this.phases_lb = new System.Windows.Forms.ListBox();
             this.devices_p = new System.Windows.Forms.Panel();
             this.update_animations_b = new System.Windows.Forms.Button();
             this.animations_lv = new System.Windows.Forms.ListView();
@@ -94,11 +94,13 @@
             // 
             // slaves_lv
             // 
+            this.slaves_lv.FullRowSelect = true;
             this.slaves_lv.Location = new System.Drawing.Point(0, 29);
             this.slaves_lv.Name = "slaves_lv";
             this.slaves_lv.Size = new System.Drawing.Size(197, 183);
             this.slaves_lv.TabIndex = 0;
             this.slaves_lv.UseCompatibleStateImageBehavior = false;
+            this.slaves_lv.SelectedIndexChanged += new System.EventHandler(this.select_slave);
             // 
             // animation_settings_p
             // 
@@ -166,27 +168,34 @@
             // 
             // animation_maker_p
             // 
-            this.animation_maker_p.Controls.Add(this.colors_lb);
+            this.animation_maker_p.Controls.Add(this.colors_lv);
+            this.animation_maker_p.Controls.Add(this.phases_lv);
             this.animation_maker_p.Controls.Add(this.color_b);
             this.animation_maker_p.Controls.Add(this.to_l);
             this.animation_maker_p.Controls.Add(this.from_l);
             this.animation_maker_p.Controls.Add(this.numericUpDown5);
             this.animation_maker_p.Controls.Add(this.numericUpDown4);
             this.animation_maker_p.Controls.Add(this.save_b);
-            this.animation_maker_p.Controls.Add(this.phases_lb);
             this.animation_maker_p.Location = new System.Drawing.Point(12, 66);
             this.animation_maker_p.Name = "animation_maker_p";
             this.animation_maker_p.Size = new System.Drawing.Size(554, 383);
             this.animation_maker_p.TabIndex = 2;
             // 
-            // colors_lb
+            // colors_lv
             // 
-            this.colors_lb.FormattingEnabled = true;
-            this.colors_lb.ItemHeight = 15;
-            this.colors_lb.Location = new System.Drawing.Point(0, 199);
-            this.colors_lb.Name = "colors_lb";
-            this.colors_lb.Size = new System.Drawing.Size(395, 184);
-            this.colors_lb.TabIndex = 13;
+            this.colors_lv.Location = new System.Drawing.Point(0, 199);
+            this.colors_lv.Name = "colors_lv";
+            this.colors_lv.Size = new System.Drawing.Size(395, 184);
+            this.colors_lv.TabIndex = 15;
+            this.colors_lv.UseCompatibleStateImageBehavior = false;
+            // 
+            // phases_lv
+            // 
+            this.phases_lv.Location = new System.Drawing.Point(0, 0);
+            this.phases_lv.Name = "phases_lv";
+            this.phases_lv.Size = new System.Drawing.Size(395, 184);
+            this.phases_lv.TabIndex = 14;
+            this.phases_lv.UseCompatibleStateImageBehavior = false;
             // 
             // color_b
             // 
@@ -240,15 +249,6 @@
             this.save_b.Text = "Save";
             this.save_b.UseVisualStyleBackColor = true;
             // 
-            // phases_lb
-            // 
-            this.phases_lb.FormattingEnabled = true;
-            this.phases_lb.ItemHeight = 15;
-            this.phases_lb.Location = new System.Drawing.Point(0, 3);
-            this.phases_lb.Name = "phases_lb";
-            this.phases_lb.Size = new System.Drawing.Size(395, 184);
-            this.phases_lb.TabIndex = 0;
-            // 
             // devices_p
             // 
             this.devices_p.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -262,6 +262,7 @@
             // 
             // update_animations_b
             // 
+            this.update_animations_b.Enabled = false;
             this.update_animations_b.Location = new System.Drawing.Point(142, 0);
             this.update_animations_b.Name = "update_animations_b";
             this.update_animations_b.Size = new System.Drawing.Size(58, 23);
@@ -272,6 +273,7 @@
             // 
             // animations_lv
             // 
+            this.animations_lv.FullRowSelect = true;
             this.animations_lv.Location = new System.Drawing.Point(0, 29);
             this.animations_lv.Name = "animations_lv";
             this.animations_lv.Size = new System.Drawing.Size(197, 187);
@@ -332,15 +334,15 @@
         private NumericUpDown numericUpDown5;
         private NumericUpDown numericUpDown4;
         private Button save_b;
-        private ListBox phases_lb;
         private Panel devices_p;
         private ListView animations_lv;
         private TextBox textBox2;
         private TrackBar repetitions_tb;
         private Button color_b;
         private ColorDialog colorDialog1;
-        private ListBox colors_lb;
         private Button update_b;
         private Button update_animations_b;
+        private ListView colors_lv;
+        private ListView phases_lv;
     }
 }
