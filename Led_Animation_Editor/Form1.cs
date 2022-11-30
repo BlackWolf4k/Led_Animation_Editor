@@ -32,10 +32,18 @@ namespace Led_Animation_Editor
                 socket.Send( Encoding.ASCII.GetBytes( "get_slaves" ) );
 
                 // Recive slaves
-                while ( socket.Receive( buffer ) > 0 )
+                while ( true )
                 {
-                    for ( Int32 i = 0; i < buffer.Length && buffer[i] != 0; i++ )
-                        slaves_lv.Items.Add( buffer[i].ToString() );
+                    int bytes_recived = socket.Receive( buffer );
+
+                    if ( bytes_recived <= 0 )
+                        break;
+
+                    for ( Int32 i = 0; i < buffer.Length; i += 20 ) // 20 = sizeof( slave_t )
+                    {
+                        if ( buffer[i] > 0 )
+                            slaves_lv.Items.Add( new ListViewItem( buffer[i].ToString() ) );
+                    }
                 }
 
                 // Close the connection
@@ -69,6 +77,7 @@ namespace Led_Animation_Editor
                 // Recive slaves
                 while ( socket.Receive( buffer ) > 0 )
                 {
+                    MessageBox.Show("aaa");
                 }
 
                 // Close the connection
@@ -83,5 +92,15 @@ namespace Led_Animation_Editor
 
         private void get_animation()
         {}
+
+        private void force_slave_update( object sender, EventArgs e )
+        {
+            get_slaves();
+        }
+
+        private void force_animations_update( object sender, EventArgs e )
+        {
+            get_animations_names();
+        }
     }
 }

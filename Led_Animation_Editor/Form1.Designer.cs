@@ -49,10 +49,10 @@
             this.save_b = new System.Windows.Forms.Button();
             this.phases_lb = new System.Windows.Forms.ListBox();
             this.devices_p = new System.Windows.Forms.Panel();
+            this.update_animations_b = new System.Windows.Forms.Button();
             this.animations_lv = new System.Windows.Forms.ListView();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
-            this.update_animations_b = new System.Windows.Forms.Button();
             this.animations_p.SuspendLayout();
             this.animation_settings_p.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.repetitions_tb)).BeginInit();
@@ -83,6 +83,7 @@
             this.update_b.TabIndex = 4;
             this.update_b.Text = "Update";
             this.update_b.UseVisualStyleBackColor = true;
+            this.update_b.Click += new System.EventHandler(this.force_slave_update);
             // 
             // textBox1
             // 
@@ -259,6 +260,16 @@
             this.devices_p.Size = new System.Drawing.Size(200, 215);
             this.devices_p.TabIndex = 3;
             // 
+            // update_animations_b
+            // 
+            this.update_animations_b.Location = new System.Drawing.Point(142, 0);
+            this.update_animations_b.Name = "update_animations_b";
+            this.update_animations_b.Size = new System.Drawing.Size(58, 23);
+            this.update_animations_b.TabIndex = 14;
+            this.update_animations_b.Text = "Update";
+            this.update_animations_b.UseVisualStyleBackColor = true;
+            this.update_animations_b.Click += new System.EventHandler(this.force_animations_update);
+            // 
             // animations_lv
             // 
             this.animations_lv.Location = new System.Drawing.Point(0, 29);
@@ -273,15 +284,6 @@
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(136, 23);
             this.textBox2.TabIndex = 0;
-            // 
-            // update_animations_b
-            // 
-            this.update_animations_b.Location = new System.Drawing.Point(142, 0);
-            this.update_animations_b.Name = "update_animations_b";
-            this.update_animations_b.Size = new System.Drawing.Size(58, 23);
-            this.update_animations_b.TabIndex = 14;
-            this.update_animations_b.Text = "Update";
-            this.update_animations_b.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
