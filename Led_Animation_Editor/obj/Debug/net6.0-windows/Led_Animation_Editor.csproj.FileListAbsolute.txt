@@ -15,3 +15,4 @@ C:\Users\Fin\Led_Animation_Editor\Led_Animation_Editor\obj\Debug\net6.0-windows\
 C:\Users\Fin\Led_Animation_Editor\Led_Animation_Editor\obj\Debug\net6.0-windows\Led_Animation_Editor.pdb
 C:\Users\Fin\Led_Animation_Editor\Led_Animation_Editor\obj\Debug\net6.0-windows\Led_Animation_Editor.genruntimeconfig.cache
 C:\Users\Fin\Led_Animation_Editor\Led_Animation_Editor\obj\Debug\net6.0-windows\ref\Led_Animation_Editor.dll
+C:\Users\Fin\Led_Animation_Editor\Led_Animation_Editor\obj\Debug\net6.0-windows\Led_Animation_Editor.Informations.resources

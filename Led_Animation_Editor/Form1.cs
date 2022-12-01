@@ -41,7 +41,7 @@ namespace Led_Animation_Editor
         }
 
         // Struct for the animation file descriptor
-        private struct animation_file_descriptor_t
+        public struct animation_file_descriptor_t
         {
             public UInt32 number_of_lines;
             public UInt32 line_length;
@@ -72,7 +72,7 @@ namespace Led_Animation_Editor
 
         string animation_to_send = "";
 
-        animation_file_descriptor_t animation_file_descriptor;
+        public static animation_file_descriptor_t animation_file_descriptor;
         List<byte[]> actual_animation = new List<byte[]>();
 
         public Form1()
@@ -267,11 +267,6 @@ namespace Led_Animation_Editor
                     {
                         animation_file_descriptor = decode_animation_file_descriptor( buffer );
 
-                        // Set the values on the form
-                        phases_nud.Value = animation_file_descriptor.number_of_lines;
-                        repetitions_tb.Value = animation_file_descriptor.repeat;
-                        delay_nud.Value = animation_file_descriptor.delay;
-
                         // Clear the animations informations list views
                         phases_lv.Items.Clear();
                         colors_lv.Items.Clear();
@@ -316,9 +311,6 @@ namespace Led_Animation_Editor
         private void upload_animation()
         {
             byte[] descriptor = new byte[0];
-
-            descriptor.Concat( BitConverter.GetBytes( Int32.Parse( phases_nud.Value.ToString() ) ) );
-            descriptor.Concat( BitConverter.GetBytes( Int32.Parse( leds_nud.Value.ToString() ) ) );
         }
 
         private void into_colors_lv( byte[] buffer, UInt32 number_of_colors )
@@ -439,5 +431,10 @@ namespace Led_Animation_Editor
             }
         }
 
+        private void make_new_animation( object sender, EventArgs e )
+        {
+            Informations informations_form = new Informations();
+            informations_form.ShowDialog();
+        }
     }
 }
