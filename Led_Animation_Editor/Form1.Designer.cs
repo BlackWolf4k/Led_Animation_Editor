@@ -53,6 +53,7 @@
             this.animations_lv = new System.Windows.Forms.ListView();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
+            this.get_animation_b = new System.Windows.Forms.Button();
             this.animations_p.SuspendLayout();
             this.animation_settings_p.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.repetitions_tb)).BeginInit();
@@ -97,7 +98,7 @@
             this.slaves_lv.FullRowSelect = true;
             this.slaves_lv.Location = new System.Drawing.Point(0, 29);
             this.slaves_lv.Name = "slaves_lv";
-            this.slaves_lv.Size = new System.Drawing.Size(197, 183);
+            this.slaves_lv.Size = new System.Drawing.Size(197, 186);
             this.slaves_lv.TabIndex = 0;
             this.slaves_lv.UseCompatibleStateImageBehavior = false;
             this.slaves_lv.SelectedIndexChanged += new System.EventHandler(this.select_slave);
@@ -168,6 +169,7 @@
             // 
             // animation_maker_p
             // 
+            this.animation_maker_p.Controls.Add(this.get_animation_b);
             this.animation_maker_p.Controls.Add(this.colors_lv);
             this.animation_maker_p.Controls.Add(this.phases_lv);
             this.animation_maker_p.Controls.Add(this.color_b);
@@ -279,6 +281,7 @@
             this.animations_lv.Size = new System.Drawing.Size(197, 187);
             this.animations_lv.TabIndex = 1;
             this.animations_lv.UseCompatibleStateImageBehavior = false;
+            this.animations_lv.SelectedIndexChanged += new System.EventHandler(this.select_animation);
             // 
             // textBox2
             // 
@@ -286,6 +289,16 @@
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(136, 23);
             this.textBox2.TabIndex = 0;
+            // 
+            // get_animation_b
+            // 
+            this.get_animation_b.Location = new System.Drawing.Point(453, 167);
+            this.get_animation_b.Name = "get_animation_b";
+            this.get_animation_b.Size = new System.Drawing.Size(98, 45);
+            this.get_animation_b.TabIndex = 16;
+            this.get_animation_b.Text = "Get";
+            this.get_animation_b.UseVisualStyleBackColor = true;
+            this.get_animation_b.Click += new System.EventHandler(this.force_get_animation);
             // 
             // Form1
             // 
@@ -344,5 +357,6 @@
         private Button update_animations_b;
         private ListView colors_lv;
         private ListView phases_lv;
+        private Button get_animation_b;
     }
 }
