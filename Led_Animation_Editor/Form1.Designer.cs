@@ -33,6 +33,8 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.slaves_lv = new System.Windows.Forms.ListView();
             this.animation_settings_p = new System.Windows.Forms.Panel();
+            this.leds_l = new System.Windows.Forms.Label();
+            this.leds_nud = new System.Windows.Forms.NumericUpDown();
             this.repetitions_tb = new System.Windows.Forms.TrackBar();
             this.repetitions_l = new System.Windows.Forms.Label();
             this.phases_l = new System.Windows.Forms.Label();
@@ -40,6 +42,8 @@
             this.phases_nud = new System.Windows.Forms.NumericUpDown();
             this.delay_nud = new System.Windows.Forms.NumericUpDown();
             this.animation_maker_p = new System.Windows.Forms.Panel();
+            this.clear_b = new System.Windows.Forms.Button();
+            this.get_animation_b = new System.Windows.Forms.Button();
             this.colors_lv = new System.Windows.Forms.ListView();
             this.phases_lv = new System.Windows.Forms.ListView();
             this.color_b = new System.Windows.Forms.Button();
@@ -47,15 +51,15 @@
             this.from_l = new System.Windows.Forms.Label();
             this.numericUpDown5 = new System.Windows.Forms.NumericUpDown();
             this.numericUpDown4 = new System.Windows.Forms.NumericUpDown();
-            this.save_b = new System.Windows.Forms.Button();
+            this.upload_b = new System.Windows.Forms.Button();
             this.devices_p = new System.Windows.Forms.Panel();
             this.update_animations_b = new System.Windows.Forms.Button();
             this.animations_lv = new System.Windows.Forms.ListView();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
-            this.get_animation_b = new System.Windows.Forms.Button();
             this.animations_p.SuspendLayout();
             this.animation_settings_p.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.leds_nud)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repetitions_tb)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.phases_nud)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.delay_nud)).BeginInit();
@@ -105,6 +109,8 @@
             // 
             // animation_settings_p
             // 
+            this.animation_settings_p.Controls.Add(this.leds_l);
+            this.animation_settings_p.Controls.Add(this.leds_nud);
             this.animation_settings_p.Controls.Add(this.repetitions_tb);
             this.animation_settings_p.Controls.Add(this.repetitions_l);
             this.animation_settings_p.Controls.Add(this.phases_l);
@@ -116,9 +122,25 @@
             this.animation_settings_p.Size = new System.Drawing.Size(554, 48);
             this.animation_settings_p.TabIndex = 1;
             // 
+            // leds_l
+            // 
+            this.leds_l.AutoSize = true;
+            this.leds_l.Location = new System.Drawing.Point(163, 14);
+            this.leds_l.Name = "leds_l";
+            this.leds_l.Size = new System.Drawing.Size(34, 15);
+            this.leds_l.TabIndex = 17;
+            this.leds_l.Text = "Leds:";
+            // 
+            // leds_nud
+            // 
+            this.leds_nud.Location = new System.Drawing.Point(203, 12);
+            this.leds_nud.Name = "leds_nud";
+            this.leds_nud.Size = new System.Drawing.Size(54, 23);
+            this.leds_nud.TabIndex = 18;
+            // 
             // repetitions_tb
             // 
-            this.repetitions_tb.Location = new System.Drawing.Point(294, 3);
+            this.repetitions_tb.Location = new System.Drawing.Point(363, 0);
             this.repetitions_tb.Maximum = 255;
             this.repetitions_tb.Name = "repetitions_tb";
             this.repetitions_tb.Size = new System.Drawing.Size(74, 45);
@@ -127,7 +149,7 @@
             // repetitions_l
             // 
             this.repetitions_l.AutoSize = true;
-            this.repetitions_l.Location = new System.Drawing.Point(208, 14);
+            this.repetitions_l.Location = new System.Drawing.Point(288, 16);
             this.repetitions_l.Name = "repetitions_l";
             this.repetitions_l.Size = new System.Drawing.Size(69, 15);
             this.repetitions_l.TabIndex = 5;
@@ -136,7 +158,7 @@
             // phases_l
             // 
             this.phases_l.AutoSize = true;
-            this.phases_l.Location = new System.Drawing.Point(38, 14);
+            this.phases_l.Location = new System.Drawing.Point(3, 14);
             this.phases_l.Name = "phases_l";
             this.phases_l.Size = new System.Drawing.Size(43, 15);
             this.phases_l.TabIndex = 4;
@@ -145,7 +167,7 @@
             // delay_l
             // 
             this.delay_l.AutoSize = true;
-            this.delay_l.Location = new System.Drawing.Point(396, 14);
+            this.delay_l.Location = new System.Drawing.Point(452, 16);
             this.delay_l.Name = "delay_l";
             this.delay_l.Size = new System.Drawing.Size(36, 15);
             this.delay_l.TabIndex = 3;
@@ -153,7 +175,7 @@
             // 
             // phases_nud
             // 
-            this.phases_nud.Location = new System.Drawing.Point(107, 12);
+            this.phases_nud.Location = new System.Drawing.Point(52, 12);
             this.phases_nud.Name = "phases_nud";
             this.phases_nud.Size = new System.Drawing.Size(70, 23);
             this.phases_nud.TabIndex = 2;
@@ -161,14 +183,15 @@
             // 
             // delay_nud
             // 
-            this.delay_nud.Location = new System.Drawing.Point(438, 12);
+            this.delay_nud.Location = new System.Drawing.Point(494, 12);
             this.delay_nud.Name = "delay_nud";
-            this.delay_nud.Size = new System.Drawing.Size(70, 23);
+            this.delay_nud.Size = new System.Drawing.Size(57, 23);
             this.delay_nud.TabIndex = 0;
             this.delay_nud.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // animation_maker_p
             // 
+            this.animation_maker_p.Controls.Add(this.clear_b);
             this.animation_maker_p.Controls.Add(this.get_animation_b);
             this.animation_maker_p.Controls.Add(this.colors_lv);
             this.animation_maker_p.Controls.Add(this.phases_lv);
@@ -177,17 +200,37 @@
             this.animation_maker_p.Controls.Add(this.from_l);
             this.animation_maker_p.Controls.Add(this.numericUpDown5);
             this.animation_maker_p.Controls.Add(this.numericUpDown4);
-            this.animation_maker_p.Controls.Add(this.save_b);
+            this.animation_maker_p.Controls.Add(this.upload_b);
             this.animation_maker_p.Location = new System.Drawing.Point(12, 66);
             this.animation_maker_p.Name = "animation_maker_p";
             this.animation_maker_p.Size = new System.Drawing.Size(554, 383);
             this.animation_maker_p.TabIndex = 2;
             // 
+            // clear_b
+            // 
+            this.clear_b.Location = new System.Drawing.Point(406, 344);
+            this.clear_b.Name = "clear_b";
+            this.clear_b.Size = new System.Drawing.Size(71, 39);
+            this.clear_b.TabIndex = 17;
+            this.clear_b.Text = "Clear";
+            this.clear_b.UseVisualStyleBackColor = true;
+            this.clear_b.Click += new System.EventHandler(this.force_set_tables);
+            // 
+            // get_animation_b
+            // 
+            this.get_animation_b.Location = new System.Drawing.Point(483, 300);
+            this.get_animation_b.Name = "get_animation_b";
+            this.get_animation_b.Size = new System.Drawing.Size(71, 38);
+            this.get_animation_b.TabIndex = 16;
+            this.get_animation_b.Text = "Get";
+            this.get_animation_b.UseVisualStyleBackColor = true;
+            this.get_animation_b.Click += new System.EventHandler(this.force_get_animation);
+            // 
             // colors_lv
             // 
-            this.colors_lv.Location = new System.Drawing.Point(0, 199);
+            this.colors_lv.Location = new System.Drawing.Point(102, 0);
             this.colors_lv.Name = "colors_lv";
-            this.colors_lv.Size = new System.Drawing.Size(395, 184);
+            this.colors_lv.Size = new System.Drawing.Size(452, 184);
             this.colors_lv.TabIndex = 15;
             this.colors_lv.UseCompatibleStateImageBehavior = false;
             // 
@@ -195,13 +238,14 @@
             // 
             this.phases_lv.Location = new System.Drawing.Point(0, 0);
             this.phases_lv.Name = "phases_lv";
-            this.phases_lv.Size = new System.Drawing.Size(395, 184);
+            this.phases_lv.Size = new System.Drawing.Size(96, 184);
             this.phases_lv.TabIndex = 14;
             this.phases_lv.UseCompatibleStateImageBehavior = false;
+            this.phases_lv.SelectedIndexChanged += new System.EventHandler(this.change_displayed_colors);
             // 
             // color_b
             // 
-            this.color_b.Location = new System.Drawing.Point(441, 103);
+            this.color_b.Location = new System.Drawing.Point(146, 304);
             this.color_b.Name = "color_b";
             this.color_b.Size = new System.Drawing.Size(90, 30);
             this.color_b.TabIndex = 12;
@@ -211,7 +255,7 @@
             // to_l
             // 
             this.to_l.AutoSize = true;
-            this.to_l.Location = new System.Drawing.Point(440, 58);
+            this.to_l.Location = new System.Drawing.Point(145, 259);
             this.to_l.Name = "to_l";
             this.to_l.Size = new System.Drawing.Size(19, 15);
             this.to_l.TabIndex = 11;
@@ -220,7 +264,7 @@
             // from_l
             // 
             this.from_l.AutoSize = true;
-            this.from_l.Location = new System.Drawing.Point(424, 28);
+            this.from_l.Location = new System.Drawing.Point(129, 229);
             this.from_l.Name = "from_l";
             this.from_l.Size = new System.Drawing.Size(35, 15);
             this.from_l.TabIndex = 10;
@@ -228,7 +272,7 @@
             // 
             // numericUpDown5
             // 
-            this.numericUpDown5.Location = new System.Drawing.Point(465, 56);
+            this.numericUpDown5.Location = new System.Drawing.Point(170, 257);
             this.numericUpDown5.Name = "numericUpDown5";
             this.numericUpDown5.Size = new System.Drawing.Size(66, 23);
             this.numericUpDown5.TabIndex = 6;
@@ -236,20 +280,21 @@
             // 
             // numericUpDown4
             // 
-            this.numericUpDown4.Location = new System.Drawing.Point(465, 26);
+            this.numericUpDown4.Location = new System.Drawing.Point(170, 227);
             this.numericUpDown4.Name = "numericUpDown4";
             this.numericUpDown4.Size = new System.Drawing.Size(66, 23);
             this.numericUpDown4.TabIndex = 5;
             this.numericUpDown4.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // save_b
+            // upload_b
             // 
-            this.save_b.Location = new System.Drawing.Point(465, 344);
-            this.save_b.Name = "save_b";
-            this.save_b.Size = new System.Drawing.Size(89, 39);
-            this.save_b.TabIndex = 1;
-            this.save_b.Text = "Save";
-            this.save_b.UseVisualStyleBackColor = true;
+            this.upload_b.Location = new System.Drawing.Point(483, 344);
+            this.upload_b.Name = "upload_b";
+            this.upload_b.Size = new System.Drawing.Size(71, 39);
+            this.upload_b.TabIndex = 1;
+            this.upload_b.Text = "Upload";
+            this.upload_b.UseVisualStyleBackColor = true;
+            this.upload_b.Click += new System.EventHandler(this.force_animation_upload);
             // 
             // devices_p
             // 
@@ -290,16 +335,6 @@
             this.textBox2.Size = new System.Drawing.Size(136, 23);
             this.textBox2.TabIndex = 0;
             // 
-            // get_animation_b
-            // 
-            this.get_animation_b.Location = new System.Drawing.Point(453, 167);
-            this.get_animation_b.Name = "get_animation_b";
-            this.get_animation_b.Size = new System.Drawing.Size(98, 45);
-            this.get_animation_b.TabIndex = 16;
-            this.get_animation_b.Text = "Get";
-            this.get_animation_b.UseVisualStyleBackColor = true;
-            this.get_animation_b.Click += new System.EventHandler(this.force_get_animation);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -317,6 +352,7 @@
             this.animations_p.PerformLayout();
             this.animation_settings_p.ResumeLayout(false);
             this.animation_settings_p.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.leds_nud)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repetitions_tb)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.phases_nud)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.delay_nud)).EndInit();
@@ -346,7 +382,7 @@
         private Label from_l;
         private NumericUpDown numericUpDown5;
         private NumericUpDown numericUpDown4;
-        private Button save_b;
+        private Button upload_b;
         private Panel devices_p;
         private ListView animations_lv;
         private TextBox textBox2;
@@ -358,5 +394,8 @@
         private ListView colors_lv;
         private ListView phases_lv;
         private Button get_animation_b;
+        private NumericUpDown leds_nud;
+        private Label leds_l;
+        private Button clear_b;
     }
 }

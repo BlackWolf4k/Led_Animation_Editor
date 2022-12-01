@@ -3,12 +3,13 @@ using System.Text;
 using System.Net;
 using System.Net.Sockets;
 
+using System.Linq;
+
 namespace Led_Animation_Editor
 {
     public partial class Form1 : Form
     {
         // Struct for the slave
-        [ Serializable ]
         private struct slave_t
         {
             public byte id;
@@ -57,8 +58,8 @@ namespace Led_Animation_Editor
             animation_file_descriptor_t animation_file_descriptor = new animation_file_descriptor_t();
             
             // Decode the buffer
-            animation_file_descriptor.number_of_lines = buffer[0];
-            animation_file_descriptor.line_length = buffer[4];
+            animation_file_descriptor.number_of_lines = BitConverter.ToUInt32( buffer, 0 );
+            animation_file_descriptor.line_length = BitConverter.ToUInt32( buffer, 4 );
             animation_file_descriptor.delay = buffer[8];
             animation_file_descriptor.repeat = buffer[9];
             animation_file_descriptor.pattern = buffer[10];
@@ -71,6 +72,7 @@ namespace Led_Animation_Editor
 
         string animation_to_send = "";
 
+        animation_file_descriptor_t animation_file_descriptor;
         List<byte[]> actual_animation = new List<byte[]>();
 
         public Form1()
@@ -83,24 +85,31 @@ namespace Led_Animation_Editor
         private void set_tables()
         {
             // Ste the slaves table
+            slaves_lv.Items.Clear();
+            slaves_lv.Columns.Clear();
             slaves_lv.View = View.Details;
             slaves_lv.Columns.Add( "ID", 50 );
             slaves_lv.Columns.Add( "IP", 147 );
 
             // Set the animations table
+            animations_lv.Items.Clear();
+            animations_lv.Columns.Clear();
             animations_lv.View = View.Details;
             animations_lv.Columns.Add( "Name", 197 );
 
             // Set the phases table
+            phases_lv.Items.Clear();
+            phases_lv.Columns.Clear();
             phases_lv.View = View.Details;
-            phases_lv.Columns.Add( "N", 50 );
-            phases_lv.Columns.Add( "Colors", 345 );
+            phases_lv.Columns.Add( "Phase", 96 );
 
             // Set the colors table
+            colors_lv.Items.Clear();
+            colors_lv.Columns.Clear();
             colors_lv.View = View.Details;
             colors_lv.Columns.Add( "From", 50 );
             colors_lv.Columns.Add( "To", 50 );
-            colors_lv.Columns.Add( "Color ( R - G - B )", 295 );
+            colors_lv.Columns.Add( "Color ( R - G - B )", 352 );
         }
 
         private void get_slaves()
@@ -110,6 +119,9 @@ namespace Led_Animation_Editor
 
             // Create the socket
             Socket socket = new Socket( SocketType.Stream, ProtocolType.Tcp );
+
+            // Recive timeout
+            socket.ReceiveTimeout = 1000;
 
             // Connect to the server
             try
@@ -165,6 +177,9 @@ namespace Led_Animation_Editor
             // Create the socket
             Socket socket = new Socket( SocketType.Stream, ProtocolType.Tcp );
 
+            // Recive timeout
+            socket.ReceiveTimeout = 1000;
+
             // Connect to the server
             try
             {
@@ -217,6 +232,9 @@ namespace Led_Animation_Editor
             // Create the socket
             Socket socket = new Socket( SocketType.Stream, ProtocolType.Tcp );
 
+            // Recive timeout
+            socket.ReceiveTimeout = 1000;
+
             // Connect to the server
             try
             {
@@ -233,7 +251,7 @@ namespace Led_Animation_Editor
                 // Keep track of the piece of animation recived
                 Int32 piece = 0;
 
-                animation_file_descriptor_t animation_file_descriptor;
+                byte[] animation = new byte[0];
 
                 // Recive animatio's informations
                 while ( true )
@@ -257,19 +275,23 @@ namespace Led_Animation_Editor
                         // Clear the animations informations list views
                         phases_lv.Items.Clear();
                         colors_lv.Items.Clear();
+
+                        piece += 1;
                     }
                     else
                     {
-                        // Add the animation informations
-                        actual_animation.Add( buffer );
-
-                        int_colors_lv( buffer );
+                        animation = animation.Concat( buffer ).ToArray();
                     }
                 }
 
                 // Close the connection
                 socket.Shutdown( SocketShutdown.Both );
                 socket.Close();
+
+                decode_animation_body( animation, animation_file_descriptor );
+
+                for ( UInt32 i = 0; i < animation_file_descriptor.number_of_lines; i++ )
+                    phases_lv.Items.Add( new ListViewItem( i.ToString() ) );
             }
             catch ( Exception e )
             {
@@ -277,12 +299,63 @@ namespace Led_Animation_Editor
             }
         }
 
-        private void upload_animation()
-        {}
-
-        private void int_colors_lv( byte[] buffer, UInt32 number_of_colors )
+        private void decode_animation_body( byte[] animation, animation_file_descriptor_t descriptor )
         {
-            for ( UInt32 i = 0; i < buffer.Length )
+            byte[] piece = new byte[ descriptor.line_length ];
+
+            for ( UInt32 i = 0; i < descriptor.number_of_lines; i++ )
+            {
+                for ( UInt32 j = 0; j < descriptor.line_length; j++ )
+                {
+                    piece[j] = animation[ i * descriptor.line_length + j ];
+                }
+                actual_animation.Add( piece );
+            }
+        }
+
+        private void upload_animation()
+        {
+            byte[] descriptor = new byte[0];
+
+            descriptor.Concat( BitConverter.GetBytes( Int32.Parse( phases_nud.Value.ToString() ) ) );
+            descriptor.Concat( BitConverter.GetBytes( Int32.Parse( leds_nud.Value.ToString() ) ) );
+        }
+
+        private void into_colors_lv( byte[] buffer, UInt32 number_of_colors )
+        {
+            colors_lv.Items.Clear();
+
+            MessageBox.Show(buffer.Length.ToString());
+
+            byte[] old_color = new byte[3];
+            byte[] new_color = new byte[3];
+
+            for ( Int32 j = 0; j < 3; j++ )
+            {
+                old_color[j] = buffer[ j ];
+            }
+
+            UInt32[] from_to = new UInt32[2];
+
+            for ( UInt32 i = 0; i < number_of_colors; i++ )
+            {
+                colors_lv.Items.Add(new_color[0].ToString());
+                /*for ( Int32 j = 0; j < 3; j++ )
+                {
+                    new_color[j] = buffer[ i * 3 + j ];
+                }
+
+                if ( old_color.SequenceEqual( new_color ) == false )
+                {
+                    MessageBox.Show("aa");
+                    from_to[1] = i;
+                    from_to[0] = i + 1;
+
+                    new_color.CopyTo( old_color, 0 );
+
+                    colors_lv.Items.Add( new ListViewItem( new[] { from_to[0].ToString(), from_to[1].ToString(), old_color.ToString() } ) );
+                }*/
+            }
         }
 
         private void force_slave_update( object sender, EventArgs e )
@@ -298,6 +371,16 @@ namespace Led_Animation_Editor
         private void force_get_animation(object sender, EventArgs e)
         {
             get_animation();
+        }
+
+        private void force_animation_upload(object sender, EventArgs e)
+        {
+            upload_animation();
+        }
+
+        private void force_set_tables(object sender, EventArgs e)
+        {
+            set_tables();
         }
 
         private void select_slave( object sender, EventArgs e )
@@ -323,23 +406,38 @@ namespace Led_Animation_Editor
 
         private void select_animation( object sender, EventArgs e )
         {
-            // Check if a slave was selected
+            // Check if a animation was selected
             if ( animations_lv.SelectedIndices.Count != 0 )
             {
-                // Store the slave selected
+                // Store the animation selected
                 animation_to_send = animations_lv.SelectedItems[0].Text;
 
-                // Enable the animation request
-                update_animations_b.Enabled = true;
+                // Enable the get request
+                get_animation_b.Enabled = true;
             }
-            else // No slave selected
+            else // No animation selected
             {
-                // No slave selected
+                // No animation selected
                 animation_to_send = "";
 
-                // Disable slave animation request
-                update_animations_b.Enabled = false;
+                // Disable get animation request
+                get_animation_b.Enabled = false;
             }
         }
+
+        private void change_displayed_colors( object sender, EventArgs e )
+        {
+            // Check if a line was selected
+            if ( slaves_lv.SelectedIndices.Count != 0 )
+            {
+                // Store the line selected
+                into_colors_lv( actual_animation[ slaves_lv.SelectedItems[0].Index ], animation_file_descriptor.line_length / 3 );
+            }
+            else // No line selected
+            {
+                //colors_lv.Items.Clear();
+            }
+        }
+
     }
 }
