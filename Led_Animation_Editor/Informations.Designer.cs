@@ -35,7 +35,7 @@
             this.force_to_play_l = new System.Windows.Forms.Label();
             this.delay_l = new System.Windows.Forms.Label();
             this.name_l = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.filename_tb = new System.Windows.Forms.TextBox();
             this.number_of_leds_nud = new System.Windows.Forms.NumericUpDown();
             this.phases_nud = new System.Windows.Forms.NumericUpDown();
             this.delay_nud = new System.Windows.Forms.NumericUpDown();
@@ -111,12 +111,13 @@
             this.name_l.TabIndex = 6;
             this.name_l.Text = "Name:";
             // 
-            // textBox1
+            // filename_tb
             // 
-            this.textBox1.Location = new System.Drawing.Point(85, 174);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(287, 23);
-            this.textBox1.TabIndex = 7;
+            this.filename_tb.Location = new System.Drawing.Point(85, 174);
+            this.filename_tb.MaxLength = 16;
+            this.filename_tb.Name = "filename_tb";
+            this.filename_tb.Size = new System.Drawing.Size(287, 23);
+            this.filename_tb.TabIndex = 7;
             // 
             // number_of_leds_nud
             // 
@@ -185,7 +186,7 @@
             this.Controls.Add(this.delay_nud);
             this.Controls.Add(this.phases_nud);
             this.Controls.Add(this.number_of_leds_nud);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.filename_tb);
             this.Controls.Add(this.name_l);
             this.Controls.Add(this.delay_l);
             this.Controls.Add(this.force_to_play_l);
@@ -216,7 +217,7 @@
         private Label force_to_play_l;
         private Label delay_l;
         private Label name_l;
-        private TextBox textBox1;
+        private TextBox filename_tb;
         private NumericUpDown number_of_leds_nud;
         private NumericUpDown phases_nud;
         private NumericUpDown delay_nud;

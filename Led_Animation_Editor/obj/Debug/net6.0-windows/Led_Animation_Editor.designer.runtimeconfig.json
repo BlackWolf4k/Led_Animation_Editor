@@ -12,9 +12,8 @@
       }
     ],
     "additionalProbingPaths": [
-      "C:\\Users\\riva.18361\\.dotnet\\store\\|arch|\\|tfm|",
-      "C:\\Users\\riva.18361\\.nuget\\packages",
-      "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      "C:\\Users\\Fin\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\Fin\\.nuget\\packages"
     ],
     "configProperties": {
       "Microsoft.NETCore.DotNetHostPolicy.SetAppPaths": true

@@ -71,6 +71,8 @@ namespace Led_Animation_Editor
         Int32 selected_slave = -1;
 
         string animation_to_send = "";
+        public static string file_name;
+        public static byte forced = 0;
 
         public static animation_file_descriptor_t animation_file_descriptor;
         List<byte[]> actual_animation = new List<byte[]>();
@@ -250,6 +252,9 @@ namespace Led_Animation_Editor
                 // Keep track of the piece of animation recived
                 Int32 piece = 0;
 
+                // Clear the animation buffer
+                actual_animation.Clear();
+
                 byte[] animation = new byte[0];
 
                 // Recive animatio's informations
@@ -309,7 +314,57 @@ namespace Led_Animation_Editor
 
         private void upload_animation()
         {
-            byte[] descriptor = new byte[0];
+            // Create a buffer
+            byte[] buffer = new byte[1024];
+
+            // Create the socket
+            Socket socket = new Socket( SocketType.Stream, ProtocolType.Tcp );
+
+            // Recive timeout
+            socket.ReceiveTimeout = 1000;
+
+            // Connect to the server
+            try
+            {
+                // Connect to the server
+                IPEndPoint end_point = new IPEndPoint( IPAddress.Parse( "192.136.60.133" ), ( int )( 1235 ) );
+                socket.Connect( end_point );
+
+                // Copy the descriptor in the buffer
+                Array.Copy(BitConverter.GetBytes(animation_file_descriptor.number_of_lines), buffer, 4);
+                Array.Copy(BitConverter.GetBytes(animation_file_descriptor.line_length), 0, buffer, 4, 4);
+                buffer[8] = animation_file_descriptor.delay;
+                buffer[9] = animation_file_descriptor.repeat;
+                buffer[10] = animation_file_descriptor.pattern;
+                buffer[11] = Convert.ToByte( slaves_lv.SelectedItems[0].Index );
+                buffer[12] = forced;
+                actual_animation[0][1] = Convert.ToByte( 252 );
+
+                // Ask for uploading an animation
+                socket.Send( Encoding.ASCII.GetBytes( "upload_animation" ) );
+
+                socket.Send( Encoding.ASCII.GetBytes( file_name + "\0" ) );
+
+                // Send the descriptor
+                socket.Send( buffer );
+                socket.Send(actual_animation[0]);
+
+                // Send the body
+
+                // Recive slaves
+                for ( Int32 i = 0; i < animation_file_descriptor.number_of_lines; i++ )
+                {
+                    socket.Send( actual_animation[i] );
+                }
+
+                // Close the connection
+                socket.Shutdown( SocketShutdown.Both );
+                socket.Close();
+            }
+            catch ( Exception e )
+            {
+                MessageBox.Show( "Error while connecting" );
+            }
         }
 
         private void into_colors_lv( byte[] buffer )
