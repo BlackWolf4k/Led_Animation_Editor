@@ -107,8 +107,7 @@ namespace Led_Animation_Editor
             colors_lv.Items.Clear();
             colors_lv.Columns.Clear();
             colors_lv.View = View.Details;
-            colors_lv.Columns.Add( "From", 50 );
-            colors_lv.Columns.Add( "To", 50 );
+            colors_lv.Columns.Add( "Number", 100 );
             colors_lv.Columns.Add( "Color ( R - G - B )", 352 );
         }
 
@@ -313,40 +312,13 @@ namespace Led_Animation_Editor
             byte[] descriptor = new byte[0];
         }
 
-        private void into_colors_lv( byte[] buffer, UInt32 number_of_colors )
+        private void into_colors_lv( byte[] buffer )
         {
             colors_lv.Items.Clear();
 
-            MessageBox.Show(buffer.Length.ToString());
-
-            byte[] old_color = new byte[3];
-            byte[] new_color = new byte[3];
-
-            for ( Int32 j = 0; j < 3; j++ )
+            for ( UInt32 i = 0; i < animation_file_descriptor.line_length / 3; i++ )
             {
-                old_color[j] = buffer[ j ];
-            }
-
-            UInt32[] from_to = new UInt32[2];
-
-            for ( UInt32 i = 0; i < number_of_colors; i++ )
-            {
-                colors_lv.Items.Add(new_color[0].ToString());
-                /*for ( Int32 j = 0; j < 3; j++ )
-                {
-                    new_color[j] = buffer[ i * 3 + j ];
-                }
-
-                if ( old_color.SequenceEqual( new_color ) == false )
-                {
-                    MessageBox.Show("aa");
-                    from_to[1] = i;
-                    from_to[0] = i + 1;
-
-                    new_color.CopyTo( old_color, 0 );
-
-                    colors_lv.Items.Add( new ListViewItem( new[] { from_to[0].ToString(), from_to[1].ToString(), old_color.ToString() } ) );
-                }*/
+                colors_lv.Items.Add( new ListViewItem( new[] { i.ToString(), buffer[ i * 3 + 0 ].ToString() + ", " + buffer[ i * 3 + 1 ].ToString() + ", " + buffer[ i * 3 + 2 ].ToString() } ) );
             }
         }
 
@@ -420,10 +392,10 @@ namespace Led_Animation_Editor
         private void change_displayed_colors( object sender, EventArgs e )
         {
             // Check if a line was selected
-            if ( slaves_lv.SelectedIndices.Count != 0 )
+            if ( phases_lv.SelectedIndices.Count != 0 )
             {
                 // Store the line selected
-                into_colors_lv( actual_animation[ slaves_lv.SelectedItems[0].Index ], animation_file_descriptor.line_length / 3 );
+                into_colors_lv( actual_animation[ phases_lv.SelectedItems[0].Index ] );
             }
             else // No line selected
             {
@@ -435,6 +407,39 @@ namespace Led_Animation_Editor
         {
             Informations informations_form = new Informations();
             informations_form.ShowDialog();
+
+            byte[] buffer = new byte[ animation_file_descriptor.line_length ];
+
+            // Clear the list view and the animation buffer
+            colors_lv.Items.Clear();
+            actual_animation.Clear();
+
+            // Store the phases
+            for ( UInt32 i = 0; i < animation_file_descriptor.number_of_lines; i++ )
+            {
+                phases_lv.Items.Add( new ListViewItem( i.ToString() ) );
+                actual_animation.Add( buffer );
+            }
+
+            from_nud.Maximum = ( animation_file_descriptor.line_length / 3 ) - 1;
+            to_nud.Maximum = ( animation_file_descriptor.line_length / 3 );
+        }
+
+        private void add_color( object sender, EventArgs e )
+        {
+            byte[] buffer = actual_animation[ phases_lv.SelectedItems[0].Index ];
+            for ( UInt32 i = UInt32.Parse( from_nud.Value.ToString() ) * 3; i < UInt32.Parse( to_nud.Value.ToString() ) * 3;  i += 3 )
+            {
+                buffer[ i + 0 ] = color_dialog_cd.Color.R;
+                buffer[ i + 1 ] = color_dialog_cd.Color.G;
+                buffer[ i + 2 ] = color_dialog_cd.Color.B;
+            }
+            into_colors_lv( actual_animation[ phases_lv.SelectedItems[0].Index ] );
+        }
+
+        private void choose_color(object sender, EventArgs e)
+        {
+            color_dialog_cd.ShowDialog();
         }
     }
 }

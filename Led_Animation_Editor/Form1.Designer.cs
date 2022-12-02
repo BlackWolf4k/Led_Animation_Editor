@@ -33,26 +33,27 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.slaves_lv = new System.Windows.Forms.ListView();
             this.animation_maker_p = new System.Windows.Forms.Panel();
+            this.add_b = new System.Windows.Forms.Button();
+            this.new_b = new System.Windows.Forms.Button();
             this.clear_b = new System.Windows.Forms.Button();
             this.colors_lv = new System.Windows.Forms.ListView();
             this.phases_lv = new System.Windows.Forms.ListView();
             this.color_b = new System.Windows.Forms.Button();
             this.to_l = new System.Windows.Forms.Label();
             this.from_l = new System.Windows.Forms.Label();
-            this.numericUpDown5 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown4 = new System.Windows.Forms.NumericUpDown();
+            this.to_nud = new System.Windows.Forms.NumericUpDown();
+            this.from_nud = new System.Windows.Forms.NumericUpDown();
             this.upload_b = new System.Windows.Forms.Button();
             this.get_animation_b = new System.Windows.Forms.Button();
             this.devices_p = new System.Windows.Forms.Panel();
             this.update_animations_b = new System.Windows.Forms.Button();
             this.animations_lv = new System.Windows.Forms.ListView();
             this.textBox2 = new System.Windows.Forms.TextBox();
-            this.colorDialog1 = new System.Windows.Forms.ColorDialog();
-            this.new_b = new System.Windows.Forms.Button();
+            this.color_dialog_cd = new System.Windows.Forms.ColorDialog();
             this.animations_p.SuspendLayout();
             this.animation_maker_p.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.to_nud)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.from_nud)).BeginInit();
             this.devices_p.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -96,6 +97,7 @@
             // 
             // animation_maker_p
             // 
+            this.animation_maker_p.Controls.Add(this.add_b);
             this.animation_maker_p.Controls.Add(this.new_b);
             this.animation_maker_p.Controls.Add(this.clear_b);
             this.animation_maker_p.Controls.Add(this.colors_lv);
@@ -103,13 +105,33 @@
             this.animation_maker_p.Controls.Add(this.color_b);
             this.animation_maker_p.Controls.Add(this.to_l);
             this.animation_maker_p.Controls.Add(this.from_l);
-            this.animation_maker_p.Controls.Add(this.numericUpDown5);
-            this.animation_maker_p.Controls.Add(this.numericUpDown4);
+            this.animation_maker_p.Controls.Add(this.to_nud);
+            this.animation_maker_p.Controls.Add(this.from_nud);
             this.animation_maker_p.Controls.Add(this.upload_b);
             this.animation_maker_p.Location = new System.Drawing.Point(12, 12);
             this.animation_maker_p.Name = "animation_maker_p";
             this.animation_maker_p.Size = new System.Drawing.Size(554, 437);
             this.animation_maker_p.TabIndex = 2;
+            // 
+            // add_b
+            // 
+            this.add_b.Location = new System.Drawing.Point(167, 240);
+            this.add_b.Name = "add_b";
+            this.add_b.Size = new System.Drawing.Size(90, 30);
+            this.add_b.TabIndex = 19;
+            this.add_b.Text = "Add";
+            this.add_b.UseVisualStyleBackColor = true;
+            this.add_b.Click += new System.EventHandler(this.add_color);
+            // 
+            // new_b
+            // 
+            this.new_b.Location = new System.Drawing.Point(0, 402);
+            this.new_b.Name = "new_b";
+            this.new_b.Size = new System.Drawing.Size(71, 35);
+            this.new_b.TabIndex = 18;
+            this.new_b.Text = "New";
+            this.new_b.UseVisualStyleBackColor = true;
+            this.new_b.Click += new System.EventHandler(this.make_new_animation);
             // 
             // clear_b
             // 
@@ -131,6 +153,7 @@
             // 
             // phases_lv
             // 
+            this.phases_lv.FullRowSelect = true;
             this.phases_lv.Location = new System.Drawing.Point(0, 0);
             this.phases_lv.Name = "phases_lv";
             this.phases_lv.Size = new System.Drawing.Size(96, 180);
@@ -146,6 +169,7 @@
             this.color_b.TabIndex = 12;
             this.color_b.Text = "Color";
             this.color_b.UseVisualStyleBackColor = true;
+            this.color_b.Click += new System.EventHandler(this.choose_color);
             // 
             // to_l
             // 
@@ -165,21 +189,21 @@
             this.from_l.TabIndex = 10;
             this.from_l.Text = "From";
             // 
-            // numericUpDown5
+            // to_nud
             // 
-            this.numericUpDown5.Location = new System.Drawing.Point(63, 246);
-            this.numericUpDown5.Name = "numericUpDown5";
-            this.numericUpDown5.Size = new System.Drawing.Size(66, 23);
-            this.numericUpDown5.TabIndex = 6;
-            this.numericUpDown5.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.to_nud.Location = new System.Drawing.Point(63, 246);
+            this.to_nud.Name = "to_nud";
+            this.to_nud.Size = new System.Drawing.Size(66, 23);
+            this.to_nud.TabIndex = 6;
+            this.to_nud.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // numericUpDown4
+            // from_nud
             // 
-            this.numericUpDown4.Location = new System.Drawing.Point(63, 216);
-            this.numericUpDown4.Name = "numericUpDown4";
-            this.numericUpDown4.Size = new System.Drawing.Size(66, 23);
-            this.numericUpDown4.TabIndex = 5;
-            this.numericUpDown4.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.from_nud.Location = new System.Drawing.Point(63, 216);
+            this.from_nud.Name = "from_nud";
+            this.from_nud.Size = new System.Drawing.Size(66, 23);
+            this.from_nud.TabIndex = 5;
+            this.from_nud.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // upload_b
             // 
@@ -193,6 +217,7 @@
             // 
             // get_animation_b
             // 
+            this.get_animation_b.Enabled = false;
             this.get_animation_b.Location = new System.Drawing.Point(3, 192);
             this.get_animation_b.Name = "get_animation_b";
             this.get_animation_b.Size = new System.Drawing.Size(194, 23);
@@ -241,15 +266,9 @@
             this.textBox2.Size = new System.Drawing.Size(136, 23);
             this.textBox2.TabIndex = 0;
             // 
-            // new_b
+            // color_dialog_cd
             // 
-            this.new_b.Location = new System.Drawing.Point(0, 402);
-            this.new_b.Name = "new_b";
-            this.new_b.Size = new System.Drawing.Size(71, 35);
-            this.new_b.TabIndex = 18;
-            this.new_b.Text = "New";
-            this.new_b.UseVisualStyleBackColor = true;
-            this.new_b.Click += new System.EventHandler(this.make_new_animation);
+            this.color_dialog_cd.FullOpen = true;
             // 
             // Form1
             // 
@@ -267,8 +286,8 @@
             this.animations_p.PerformLayout();
             this.animation_maker_p.ResumeLayout(false);
             this.animation_maker_p.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.to_nud)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.from_nud)).EndInit();
             this.devices_p.ResumeLayout(false);
             this.devices_p.PerformLayout();
             this.ResumeLayout(false);
@@ -283,14 +302,13 @@
         private Panel animation_maker_p;
         private Label to_l;
         private Label from_l;
-        private NumericUpDown numericUpDown5;
-        private NumericUpDown numericUpDown4;
+        private NumericUpDown to_nud;
+        private NumericUpDown from_nud;
         private Button upload_b;
         private Panel devices_p;
         private ListView animations_lv;
         private TextBox textBox2;
         private Button color_b;
-        private ColorDialog colorDialog1;
         private Button update_b;
         private Button update_animations_b;
         private ListView colors_lv;
@@ -298,5 +316,7 @@
         private Button get_animation_b;
         private Button clear_b;
         private Button new_b;
+        private Button add_b;
+        private ColorDialog color_dialog_cd;
     }
 }
