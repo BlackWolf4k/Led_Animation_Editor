@@ -336,9 +336,8 @@ namespace Led_Animation_Editor
                 buffer[8] = animation_file_descriptor.delay;
                 buffer[9] = animation_file_descriptor.repeat;
                 buffer[10] = animation_file_descriptor.pattern;
-                buffer[11] = Convert.ToByte( slaves_lv.SelectedItems[0].Index );
+                buffer[11] = Convert.ToByte( slaves_lv.SelectedItems[0].Text );
                 buffer[12] = forced;
-                actual_animation[0][1] = Convert.ToByte( 252 );
 
                 // Ask for uploading an animation
                 socket.Send( Encoding.ASCII.GetBytes( "upload_animation" ) );
@@ -347,15 +346,16 @@ namespace Led_Animation_Editor
 
                 // Send the descriptor
                 socket.Send( buffer );
-                socket.Send(actual_animation[0]);
 
                 // Send the body
 
                 // Recive slaves
                 for ( Int32 i = 0; i < animation_file_descriptor.number_of_lines; i++ )
                 {
+                    MessageBox.Show("a");
                     socket.Send( actual_animation[i] );
                 }
+                MessageBox.Show("fine");
 
                 // Close the connection
                 socket.Shutdown( SocketShutdown.Both );
